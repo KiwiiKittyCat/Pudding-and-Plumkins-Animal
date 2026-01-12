@@ -1,181 +1,141 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meow & Baby: Dress Up & Play! 🐱🎀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Kodchasan:wght@400;600&display=swap" rel="stylesheet">
+    <title>MeowMommy Random Generator 🐱</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fff0f6; /* Soft Pink */
-            --card-bg: #ffffff;
-            --primary: #ffadd2; /* Sakura Pink */
-            --secondary: #b7e4c7; /* Mint Green */
-            --accent: #ffb7b2; /* Peach */
-            --text: #85586f;
-            --border-radius: 25px;
-            --shadow: 0 8px 20px rgba(255, 173, 210, 0.3);
+            --bg-color: #ffe6e9;
+            --card-bg: #fff0f3;
+            --primary: #ff8fa3;
+            --secondary: #ffccd5;
+            --text: #8e5560;
+            --accent: #fff;
         }
 
         body {
-            font-family: 'Mali', cursive;
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(#ffadd2 15%, transparent 16%),
-                radial-gradient(#b7e4c7 15%, transparent 16%);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            color: var(--text);
             margin: 0;
             padding: 20px;
-            min-height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(var(--secondary) 15%, transparent 16%);
+            background-size: 30px 30px;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 800px;
+            background: white;
             width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(255, 143, 163, 0.3);
             text-align: center;
+            border: 5px solid var(--secondary);
+            position: relative;
         }
 
         h1 {
-            background: #fff;
-            color: #ff85a2;
-            font-size: 2.2rem;
-            padding: 20px 40px;
-            border-radius: 50px;
-            display: inline-block;
-            border: 5px solid #ffdeeb;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        h1::after {
-            content: "🐱";
-            position: absolute;
-            top: -15px;
-            right: -15px;
-            font-size: 2.5rem;
-            transform: rotate(15deg);
-        }
-
-        /* Result Area */
-        .result-card {
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 40px 20px;
-            border: 4px dashed var(--primary);
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .result-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .emoji-display {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        #themeDisplay {
-            font-size: 1.5rem;
-            color: #ff85a2;
-            font-weight: 700;
+            color: var(--primary);
+            font-size: 2rem;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 0px var(--secondary);
         }
 
-        #activityDisplay {
-            font-size: 1.2rem;
-            color: #6d6d6d;
-            line-height: 1.6;
-        }
-
-        /* Controls */
-        .controls {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-
-        select {
-            padding: 12px 20px;
-            border: 2px solid #ffdeeb;
-            border-radius: 50px;
-            font-family: 'Kodchasan', sans-serif;
-            font-size: 1rem;
+        .subtitle {
             color: var(--text);
-            outline: none;
-            cursor: pointer;
-            width: 80%;
-            max-width: 300px;
-            text-align: center;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 30px;
+            font-size: 1rem;
         }
-        select:focus { border-color: var(--primary); }
+
+        .display-box {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            border: 3px dashed var(--primary);
+            position: relative;
+        }
+
+        #result {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text);
+            font-weight: 700;
+            line-height: 1.5;
+        }
 
         .btn-group {
             display: flex;
-            justify-content: center;
             gap: 15px;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
-        .main-btn {
-            padding: 15px 40px;
+        button {
             border: none;
+            padding: 15px 30px;
             border-radius: 50px;
-            font-family: 'Mali', cursive;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-spin {
+            background-color: var(--primary);
             color: white;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+            box-shadow: 0 6px 0 #e67a8f;
         }
-        .main-btn:active { transform: translateY(4px); box-shadow: none; }
-
-        .spin-btn { background: linear-gradient(to right, #ff9aa2, #ffb7b2); }
-        .spin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 rgba(255, 154, 162, 0.4); }
-
-        .copy-btn { 
-            background: linear-gradient(to right, #a0c4ff, #bdb2ff); 
-            display: none; /* ซ่อนตอนแรก */
+        .btn-spin:hover {
+            background-color: #ff758f;
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #e67a8f;
         }
-        .copy-btn:hover { transform: translateY(-3px); }
 
-        /* Text Area for Copy */
-        #copyArea {
-            width: 0;
-            height: 0;
-            opacity: 0;
+        .btn-copy {
+            background-color: var(--secondary);
+            color: var(--text);
+            box-shadow: 0 6px 0 #ffb3c1;
+        }
+        .btn-copy:hover {
+            background-color: #ffc4d0;
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #ffb3c1;
+        }
+
+        /* Cute decoration */
+        .decoration {
+            font-size: 3rem;
             position: absolute;
+            top: -30px;
         }
+        .d-left { left: 20px; transform: rotate(-20deg); }
+        .d-right { right: 20px; transform: rotate(20deg); }
 
-        /* Toast */
+        /* Toast Notification */
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #ff85a2;
+            margin-left: -125px;
+            background-color: #ff8fa3;
             color: #fff;
             text-align: center;
             border-radius: 50px;
@@ -184,314 +144,607 @@
             z-index: 1;
             left: 50%;
             bottom: 30px;
-            transform: translateX(-50%);
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.5s, bottom 0.5s;
+            font-family: 'Nunito', sans-serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @media (max-width: 500px) {
+            h1 { font-size: 1.5rem; }
+            #result { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>🐱 Meow & Baby Activities 🍼</h1>
+        <div class="decoration d-left">🐱</div>
+        <div class="decoration d-right">👩‍👧</div>
+        
+        <h1>MeowMommy Generator</h1>
+        <div class="subtitle">500 Cute Mother & Baby Cat Activities!</div>
 
-        <div class="result-card">
-            <div class="emoji-display" id="emojiIcon">🥚</div>
-            <div id="themeDisplay">เลือกธีมชุดแล้วกดสุ่มเลย!</div>
-            <div id="activityDisplay">...กิจกรรมน่ารักๆ รออยู่...</div>
-        </div>
-
-        <div class="controls">
-            <label style="font-weight:bold; color:#ff85a2;">🎀 เลือกธีมชุด (Costume Theme)</label>
-            <select id="themeSelect">
-                <option value="random">🎲 สุ่มทุกชุด (Surprise Me!)</option>
-                <option value="Bunny">🐰 กระต่ายน้อย (Bunny)</option>
-                <option value="Bear">🐻 หมีน้อย (Bear)</option>
-                <option value="Puppy">🐶 ลูกสุนัข (Puppy)</option>
-                <option value="Fox">🦊 จิ้งจอก (Fox)</option>
-                <option value="Panda">🐼 แพนด้า (Panda)</option>
-                <option value="Tiger">🐯 เสือ (Tiger)</option>
-                <option value="Frog">🐸 กบน้อย (Frog)</option>
-                <option value="Penguin">🐧 เพนกวิน (Penguin)</option>
-                <option value="Cow">🐮 วัวนม (Cow)</option>
-                <option value="Monkey">🐵 ลิงน้อย (Monkey)</option>
-                <option value="Chicken">🐔 ลูกเจี๊ยบ (Chicken)</option>
-                <option value="Owl">🦉 นกฮูก (Owl)</option>
-                <option value="Deer">🦌 กวางน้อย (Deer)</option>
-                <option value="Sheep">🐑 แกะนุ่มนิ่ม (Sheep)</option>
-                <option value="Pig">🐷 หมูอู๊ด (Pig)</option>
-                <option value="Turtle">🐢 เต่า (Turtle)</option>
-                <option value="Otter">🦦 นาก (Otter)</option>
-                <option value="Parrot">🦜 นกแก้ว (Parrot)</option>
-                <option value="Koala">🐨 โคอาล่า (Koala)</option>
-                <option value="Goat">🐐 แพะ (Goat)</option>
-                <option value="Fantasy">🦄 แฟนตาซี (Fantasy)</option>
-            </select>
+        <div class="display-box">
+            <div id="result">Click "Random" to start! ✨</div>
         </div>
 
         <div class="btn-group">
-            <button class="main-btn spin-btn" onclick="spinActivity()">✨ สุ่มกิจกรรม (Spin)</button>
-            <button class="main-btn copy-btn" id="btnCopy" onclick="copyText()">📋 คัดลอก (Copy)</button>
+            <button class="btn-spin" onclick="generatePrompt()">
+                🎲 Random
+            </button>
+            <button class="btn-copy" onclick="copyToClipboard()">
+                📋 Copy
+            </button>
         </div>
-        
-        <textarea id="copyArea"></textarea>
     </div>
 
-    <div id="toast">✅ คัดลอกเรียบร้อย! พร้อมโพสต์แล้วค่า</div>
+    <div id="toast">Copied to clipboard! 💖</div>
 
     <script>
-        // --- DATA SETS (ย่อส่วนจากข้อมูล 1-1000 ที่ให้มา เพื่อประสิทธิภาพ) ---
-        const data = {
-            "Bunny": {
-                emoji: "🐰",
-                actions: [
-                    "baking carrot cookies", "picking flowers in a meadow", "running a pastel bakery stall", "decorating Easter eggs", "planting carrot seedlings", 
-                    "hosting a garden tea party", "painting wooden signs", "browsing a flower market", "carrying picnic baskets", "arranging pastel bouquets",
-                    "making strawberry jam", "visiting a carrot farm", "sketching flowers outdoors", "folding picnic blankets", "preparing fruit tarts",
-                    "crafting flower crowns", "strolling through a park", "baking soft bread rolls", "shopping at a craft fair", "preparing lemonade"
-                ]
-            },
-            "Bear": {
-                emoji: "🐻",
-                actions: [
-                    "running a honey shop", "harvesting honey jars", "baking honey bread", "organizing picnic hampers", "painting forest signs",
-                    "tasting berry jam", "sorting honeycomb frames", "decorating rustic tables", "visiting a forest market", "carving wooden spoons",
-                    "hosting a honey tasting", "brewing herbal tea", "sorting pinecones", "decorating bakery windows", "baking oat cookies",
-                    "trimming herb bundles", "tasting fresh honey", "decorating bread bags", "preparing breakfast spreads", "arranging forest bouquets"
-                ]
-            },
-            "Puppy": {
-                emoji: "🐶",
-                actions: [
-                    "running a dog café", "baking bone-shaped cookies", "decorating a food truck", "washing fruit bowls", "arranging café menus",
-                    "preparing juice bottles", "hosting a snack stand", "arranging cupcake trays", "cleaning café counters", "sketching menu art",
-                    "packing takeaway boxes", "arranging dessert jars", "decorating pastry bags", "brewing iced tea", "painting chalkboards",
-                    "arranging snack shelves", "packing lunch boxes", "arranging cookie jars", "hosting a tasting table", "cleaning drink dispensers"
-                ]
-            },
-            "Fox": {
-                emoji: "🦊",
-                actions: [
-                    "running a woodland bakery", "arranging berry pies", "sketching forest maps", "organizing mushroom baskets", "decorating a forest café",
-                    "labeling jam jars", "browsing a forest market", "baking honey muffins", "painting wooden signs", "hosting a tasting table",
-                    "sketching recipe cards", "waving at visitors", "preparing fruit tarts", "decorating window displays", "trimming herb bundles",
-                    "browsing craft stalls", "decorating pastry boxes", "polishing teapots", "labeling forest treats", "preparing berry drinks"
-                ]
-            },
-            "Panda": {
-                emoji: "🐼",
-                actions: [
-                    "running a bamboo café", "arranging bamboo baskets", "preparing leafy snacks", "decorating café counters", "painting soft green signs",
-                    "folding cloth napkins", "arranging fruit platters", "browsing a garden market", "preparing rice treats", "stacking wooden bowls",
-                    "labeling snack jars", "preparing tea sets", "arranging flower pots", "setting tasting spoons", "wiping café counters",
-                    "preparing snack trays", "labeling bamboo goods", "packing takeaway bags", "preparing fruit salads", "arranging bamboo décor"
-                ]
-            },
-            "Tiger": {
-                emoji: "🐯",
-                actions: [
-                    "running a jungle juice bar", "arranging tropical fruit", "preparing smoothie bowls", "decorating jungle counters", "painting leafy signs",
-                    "browsing a jungle market", "preparing fruit pops", "stacking coconut bowls", "labeling juice bottles", "preparing iced drinks",
-                    "decorating takeaway boxes", "arranging leaf décor", "setting tasting cups", "preparing snack platters", "labeling tropical treats",
-                    "packing juice sets", "preparing fruit salads", "cleaning blenders", "preparing fresh smoothies", "packing gift bags"
-                ]
-            },
-            "Frog": {
-                emoji: "🐸",
-                actions: [
-                    "running a pond café", "arranging lily tables", "preparing fruit drinks", "decorating pond counters", "painting nature signs",
-                    "folding leaf napkins", "browsing a riverside market", "preparing herbal snacks", "stacking wooden bowls", "labeling drink bottles",
-                    "sketching pond scenes", "preparing iced tea", "arranging water plants", "setting tasting cups", "preparing snack platters",
-                    "labeling pond treats", "arranging lantern lights", "preparing juice blends", "preparing frozen treats", "packing picnic snacks"
-                ]
-            },
-            "Penguin": {
-                emoji: "🐧",
-                actions: [
-                    "running an ice café", "arranging snow desserts", "preparing frozen treats", "decorating icy counters", "painting frosty signs",
-                    "folding thermal cloths", "browsing a winter market", "preparing fruit ice pops", "stacking insulated bowls", "labeling drink bottles",
-                    "preparing chilled drinks", "arranging winter décor", "setting tasting cups", "preparing snack platters", "labeling frozen treats",
-                    "preparing fruit salads", "cleaning blenders", "preparing icy drinks", "preparing snow desserts", "packing café orders"
-                ]
-            },
-            "Cow": {
-                emoji: "🐮",
-                actions: [
-                    "running a milk bar", "arranging dairy desserts", "preparing milkshakes", "decorating farm counters", "painting barn signs",
-                    "browsing a farm market", "preparing cheese snacks", "stacking wooden bowls", "labeling dairy jars", "preparing iced milk",
-                    "arranging farm décor", "setting tasting cups", "preparing snack platters", "labeling dairy treats", "packing milk gift sets",
-                    "preparing fruit salads", "cleaning blenders", "arranging barn lights", "preparing milkshakes", "closing the milk bar"
-                ]
-            },
-            "Monkey": {
-                emoji: "🐵",
-                actions: [
-                    "running a jungle smoothie bar", "arranging tropical fruit bowls", "preparing banana pancakes", "decorating bamboo counters", "painting jungle signs",
-                    "browsing a jungle market", "preparing coconut drinks", "labeling smoothie cups", "preparing fruit skewers", "arranging jungle décor",
-                    "preparing snack platters", "labeling tropical treats", "packing juice sets", "preparing fruit salads", "cleaning blenders",
-                    "arranging hanging vines", "preparing frozen bananas", "preparing chilled treats", "preparing fruit shakes", "packing jungle snacks"
-                ]
-            },
-            "Chicken": {
-                emoji: "🐔",
-                actions: [
-                    "running a countryside breakfast stall", "arranging egg baskets", "preparing fluffy omelets", "decorating wooden counters", "painting barn signs",
-                    "browsing a farm market", "preparing egg sandwiches", "labeling breakfast boxes", "preparing scrambled eggs", "arranging farm décor",
-                    "setting tasting plates", "preparing breakfast platters", "labeling farm treats", "packing breakfast sets", "preparing fruit salads",
-                    "arranging hanging signs", "preparing sunny-side eggs", "preparing baked snacks", "preparing egg tarts", "packing farm snacks"
-                ]
-            },
-            "Owl": {
-                emoji: "🦉",
-                actions: [
-                    "running a woodland library café", "arranging book stacks", "preparing herbal drinks", "decorating wooden shelves", "painting story signs",
-                    "organizing reading tables", "browsing a book market", "preparing berry scones", "labeling tea tins", "sketching bookmark designs",
-                    "preparing warm drinks", "arranging lamp décor", "preparing snack platters", "labeling woodland treats", "packing gift book sets",
-                    "preparing fruit salads", "cleaning teapots", "arranging soft lights", "preparing herbal drinks", "closing the café"
-                ]
-            },
-            "Deer": {
-                emoji: "🦌",
-                actions: [
-                    "running a meadow picnic café", "arranging wildflower baskets", "preparing fruit tarts", "decorating wooden counters", "painting meadow signs",
-                    "browsing a meadow market", "preparing berry drinks", "stacking wicker plates", "labeling picnic boxes", "sketching flower maps",
-                    "preparing herbal tea", "arranging meadow décor", "preparing snack platters", "labeling meadow treats", "packing picnic gift sets",
-                    "preparing fruit salads", "cleaning tea jars", "arranging lantern lights", "preparing berry drinks", "closing the picnic café"
-                ]
-            },
-            "Sheep": {
-                emoji: "🐑",
-                actions: [
-                    "running a wool craft café", "arranging yarn baskets", "knitting soft scarves", "decorating cozy counters", "painting cottage signs",
-                    "browsing a craft market", "preparing butter cookies", "labeling wool tags", "sketching knitting patterns", "preparing warm milk drinks",
-                    "arranging soft décor", "preparing snack platters", "labeling cottage treats", "packing wool gift sets", "preparing fruit salads",
-                    "cleaning teapots", "arranging fairy lights", "browsing fabric rolls", "preparing butter cookies", "closing the café"
-                ]
-            },
-            "Pig": {
-                emoji: "🐷",
-                actions: [
-                    "running a countryside bakery", "arranging pastry trays", "baking fruit pies", "decorating wooden counters", "painting bakery signs",
-                    "browsing a village market", "preparing bread rolls", "labeling pastry boxes", "sketching recipe boards", "preparing snack loaves",
-                    "arranging rustic décor", "preparing bakery platters", "labeling countryside treats", "packing pastry gift sets", "preparing fruit salads",
-                    "cleaning baking pans", "arranging hanging signs", "baking fruit pies", "preparing bread rolls", "closing the bakery"
-                ]
-            },
-            "Turtle": {
-                emoji: "🐢",
-                actions: [
-                    "running a seaside snack bar", "arranging shell baskets", "preparing fruit smoothies", "decorating beach counters", "painting ocean signs",
-                    "browsing a seaside market", "preparing coconut treats", "labeling snack cups", "sketching beach maps", "preparing iced juice",
-                    "arranging coastal décor", "preparing snack platters", "labeling seaside treats", "packing beach gift sets", "preparing fruit salads",
-                    "arranging picnic mats", "preparing fruit smoothies", "browsing a seaside market", "preparing coconut treats", "closing the snack bar"
-                ]
-            },
-            "Otter": {
-                emoji: "🦦",
-                actions: [
-                    "running a riverside café", "arranging pebble trays", "preparing berry drinks", "decorating river counters", "painting river signs",
-                    "browsing a riverside market", "preparing fruit pops", "labeling snack jars", "sketching river scenes", "preparing chilled drinks",
-                    "arranging river décor", "preparing snack platters", "labeling river treats", "arranging table decor", "smiling at guests",
-                    "preparing berry drinks", "browsing a riverside market", "preparing fruit pops", "cleaning café counters", "closing the café"
-                ]
-            },
-            "Parrot": {
-                emoji: "🦜",
-                actions: [
-                    "running a tropical juice bar", "arranging fruit displays", "preparing colorful smoothies", "decorating bright counters", "painting tropical signs",
-                    "browsing a beach market", "preparing fruit skewers", "labeling juice cups", "sketching menu art", "preparing chilled drinks",
-                    "arranging tropical décor", "setting tasting cups", "smiling at guests", "preparing colorful smoothies", "closing the juice bar",
-                    "arranging fruit displays", "browsing a beach market", "preparing fruit skewers", "cleaning bar counters", "organizing pantry shelves"
-                ]
-            },
-            "Koala": {
-                emoji: "🐨",
-                actions: [
-                    "running a eucalyptus tea café", "arranging leaf baskets", "preparing herbal drinks", "decorating wooden shelves", "painting forest signs",
-                    "browsing a forest market", "folding soft napkins", "arranging drink cups", "organizing picnic trays", "sorting tea jars",
-                    "preparing herbal drinks", "decorating wooden shelves", "painting forest signs", "browsing a forest market", "folding soft napkins"
-                ]
-            },
-            "Goat": {
-                emoji: "🐐",
-                actions: [
-                    "running a mountain cheese stall", "arranging cheese boards", "preparing milk snacks", "decorating rustic counters", "painting hill signs",
-                    "browsing a mountain market", "preparing cheese bites", "labeling cheese jars", "smiling at guests", "closing the stall",
-                    "arranging cheese boards", "preparing milk snacks", "decorating rustic counters", "painting hill signs", "browsing a mountain market"
-                ]
-            },
-            "Fantasy": {
-                emoji: "🦄",
-                actions: [
-                    "running a pastel magic café", "preparing sparkling fruit drinks", "arranging sky picnic baskets", "hosting a meadow tea party", "decorating a dream café",
-                    "gathering stardust ingredients", "baking rainbow cookies", "organizing cloud pillows", "sketching magic spells", "serving moonbeam tea",
-                    "flying over pastel clouds", "polishing magic wands", "arranging crystal jars", "painting dreamscapes", "visiting a star market"
-                ]
-            }
-        };
+        // Data: 500 Cute English Sentences
+        const prompts = [
+            // Bunny Themes (1-50)
+            "Mother and baby cat wearing bunny costumes are baking carrot cookies.",
+            "Mother and baby cat wearing bunny costumes are picking flowers in a meadow.",
+            "Mother and baby cat wearing bunny costumes are running a pastel bakery stall.",
+            "Mother and baby cat wearing bunny costumes are decorating Easter eggs.",
+            "Mother and baby cat wearing bunny costumes are planting carrot seedlings.",
+            "Mother and baby cat wearing bunny costumes are hosting a garden tea party.",
+            "Mother and baby cat wearing bunny costumes are painting wooden signs.",
+            "Mother and baby cat wearing bunny costumes are browsing a flower market.",
+            "Mother and baby cat wearing bunny costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing bunny costumes are arranging pastel bouquets.",
+            "Mother and baby cat wearing bunny costumes are making strawberry jam.",
+            "Mother and baby cat wearing bunny costumes are visiting a carrot farm.",
+            "Mother and baby cat wearing bunny costumes are sketching flowers outdoors.",
+            "Mother and baby cat wearing bunny costumes are folding picnic blankets.",
+            "Mother and baby cat wearing bunny costumes are preparing fruit tarts.",
+            "Mother and baby cat wearing bunny costumes are sorting pastel ribbons.",
+            "Mother and baby cat wearing bunny costumes are watering garden beds.",
+            "Mother and baby cat wearing bunny costumes are crafting flower crowns.",
+            "Mother and baby cat wearing bunny costumes are arranging dessert displays.",
+            "Mother and baby cat wearing bunny costumes are strolling through a park.",
+            "Mother and baby cat wearing bunny costumes are baking soft bread rolls.",
+            "Mother and baby cat wearing bunny costumes are labeling jam jars.",
+            "Mother and baby cat wearing bunny costumes are decorating picnic tables.",
+            "Mother and baby cat wearing bunny costumes are shopping at a craft fair.",
+            "Mother and baby cat wearing bunny costumes are preparing lemonade.",
+            "Mother and baby cat wearing bunny costumes are carrying woven baskets.",
+            "Mother and baby cat wearing bunny costumes are arranging cupcakes.",
+            "Mother and baby cat wearing bunny costumes are writing handwritten menus.",
+            "Mother and baby cat wearing bunny costumes are washing fresh vegetables.",
+            "Mother and baby cat wearing bunny costumes are hanging garden bunting.",
+            "Mother and baby cat wearing bunny costumes are sorting pastel candies.",
+            "Mother and baby cat wearing bunny costumes are sketching garden scenes.",
+            "Mother and baby cat wearing bunny costumes are pressing flowers.",
+            "Mother and baby cat wearing bunny costumes are organizing bakery shelves.",
+            "Mother and baby cat wearing bunny costumes are packing picnic snacks.",
+            "Mother and baby cat wearing bunny costumes are planting flower bulbs.",
+            "Mother and baby cat wearing bunny costumes are displaying pastries.",
+            "Mother and baby cat wearing bunny costumes are tying ribbon bows.",
+            "Mother and baby cat wearing bunny costumes are tasting jam samples.",
+            "Mother and baby cat wearing bunny costumes are browsing a stationery shop.",
+            "Mother and baby cat wearing bunny costumes are arranging tea cups.",
+            "Mother and baby cat wearing bunny costumes are cleaning picnic tables.",
+            "Mother and baby cat wearing bunny costumes are crafting paper tags.",
+            "Mother and baby cat wearing bunny costumes are carrying carrot baskets.",
+            "Mother and baby cat wearing bunny costumes are visiting a countryside café.",
+            "Mother and baby cat wearing bunny costumes are preparing gift boxes.",
+            "Mother and baby cat wearing bunny costumes are watering potted plants.",
+            "Mother and baby cat wearing bunny costumes are decorating window displays.",
+            "Mother and baby cat wearing bunny costumes are painting ceramic plates.",
+            "Mother and baby cat wearing bunny costumes are hosting a dessert tasting.",
 
-        function spinActivity() {
-            const btn = document.querySelector('.spin-btn');
-            btn.innerHTML = "⏳ กำลังสุ่ม...";
-            btn.disabled = true;
+            // Bear Themes (51-100)
+            "Mother and baby cat wearing bear costumes are running a honey shop.",
+            "Mother and baby cat wearing bear costumes are harvesting honey jars.",
+            "Mother and baby cat wearing bear costumes are baking honey bread.",
+            "Mother and baby cat wearing bear costumes are organizing picnic hampers.",
+            "Mother and baby cat wearing bear costumes are painting forest signs.",
+            "Mother and baby cat wearing bear costumes are arranging wooden shelves.",
+            "Mother and baby cat wearing bear costumes are tasting berry jam.",
+            "Mother and baby cat wearing bear costumes are sorting honeycomb frames.",
+            "Mother and baby cat wearing bear costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing bear costumes are decorating rustic tables.",
+            "Mother and baby cat wearing bear costumes are preparing berry pies.",
+            "Mother and baby cat wearing bear costumes are visiting a forest market.",
+            "Mother and baby cat wearing bear costumes are carving wooden spoons.",
+            "Mother and baby cat wearing bear costumes are labeling honey jars.",
+            "Mother and baby cat wearing bear costumes are sketching woodland scenes.",
+            "Mother and baby cat wearing bear costumes are stacking bread loaves.",
+            "Mother and baby cat wearing bear costumes are washing berries.",
+            "Mother and baby cat wearing bear costumes are arranging candle jars.",
+            "Mother and baby cat wearing bear costumes are hosting a honey tasting.",
+            "Mother and baby cat wearing bear costumes are folding picnic cloths.",
+            "Mother and baby cat wearing bear costumes are polishing wooden counters.",
+            "Mother and baby cat wearing bear costumes are arranging dried flowers.",
+            "Mother and baby cat wearing bear costumes are brewing herbal tea.",
+            "Mother and baby cat wearing bear costumes are sorting pinecones.",
+            "Mother and baby cat wearing bear costumes are preparing gift baskets.",
+            "Mother and baby cat wearing bear costumes are decorating bakery windows.",
+            "Mother and baby cat wearing bear costumes are painting honey labels.",
+            "Mother and baby cat wearing bear costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing bear costumes are arranging jam displays.",
+            "Mother and baby cat wearing bear costumes are cleaning picnic benches.",
+            "Mother and baby cat wearing bear costumes are crafting wax seals.",
+            "Mother and baby cat wearing bear costumes are arranging rustic signage.",
+            "Mother and baby cat wearing bear costumes are baking oat cookies.",
+            "Mother and baby cat wearing bear costumes are trimming herb bundles.",
+            "Mother and baby cat wearing bear costumes are sketching menu boards.",
+            "Mother and baby cat wearing bear costumes are stacking wooden crates.",
+            "Mother and baby cat wearing bear costumes are tasting fresh honey.",
+            "Mother and baby cat wearing bear costumes are carrying flower buckets.",
+            "Mother and baby cat wearing bear costumes are decorating bread bags.",
+            "Mother and baby cat wearing bear costumes are browsing a craft market.",
+            "Mother and baby cat wearing bear costumes are preparing breakfast spreads.",
+            "Mother and baby cat wearing bear costumes are sorting baking jars.",
+            "Mother and baby cat wearing bear costumes are arranging forest bouquets.",
+            "Mother and baby cat wearing bear costumes are folding napkins.",
+            "Mother and baby cat wearing bear costumes are setting picnic tables.",
+            "Mother and baby cat wearing bear costumes are labeling spice jars.",
+            "Mother and baby cat wearing bear costumes are organizing kitchen tools.",
+            "Mother and baby cat wearing bear costumes are painting picnic signs.",
+            "Mother and baby cat wearing bear costumes are arranging pastry trays.",
+            "Mother and baby cat wearing bear costumes are packing honey gifts.",
 
-            const selector = document.getElementById('themeSelect');
-            const selectedTheme = selector.value;
-            let finalTheme = "";
+            // Puppy Themes (101-150)
+            "Mother and baby cat wearing puppy costumes are running a dog café.",
+            "Mother and baby cat wearing puppy costumes are baking bone-shaped cookies.",
+            "Mother and baby cat wearing puppy costumes are organizing picnic snacks.",
+            "Mother and baby cat wearing puppy costumes are decorating a food truck.",
+            "Mother and baby cat wearing puppy costumes are washing fruit bowls.",
+            "Mother and baby cat wearing puppy costumes are arranging café menus.",
+            "Mother and baby cat wearing puppy costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing puppy costumes are decorating window signs.",
+            "Mother and baby cat wearing puppy costumes are preparing juice bottles.",
+            "Mother and baby cat wearing puppy costumes are sorting colorful straws.",
+            "Mother and baby cat wearing puppy costumes are hosting a snack stand.",
+            "Mother and baby cat wearing puppy costumes are arranging cupcake trays.",
+            "Mother and baby cat wearing puppy costumes are cleaning café counters.",
+            "Mother and baby cat wearing puppy costumes are folding napkins.",
+            "Mother and baby cat wearing puppy costumes are sketching menu art.",
+            "Mother and baby cat wearing puppy costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing puppy costumes are packing takeaway boxes.",
+            "Mother and baby cat wearing puppy costumes are arranging dessert jars.",
+            "Mother and baby cat wearing puppy costumes are labeling drink bottles.",
+            "Mother and baby cat wearing puppy costumes are wiping tables.",
+            "Mother and baby cat wearing puppy costumes are sorting bakery tools.",
+            "Mother and baby cat wearing puppy costumes are decorating pastry bags.",
+            "Mother and baby cat wearing puppy costumes are arranging fruit displays.",
+            "Mother and baby cat wearing puppy costumes are preparing picnic sets.",
+            "Mother and baby cat wearing puppy costumes are brewing iced tea.",
+            "Mother and baby cat wearing puppy costumes are stacking paper cups.",
+            "Mother and baby cat wearing puppy costumes are organizing recipe cards.",
+            "Mother and baby cat wearing puppy costumes are arranging café chairs.",
+            "Mother and baby cat wearing puppy costumes are painting chalkboards.",
+            "Mother and baby cat wearing puppy costumes are folding picnic cloths.",
+            "Mother and baby cat wearing puppy costumes are sorting baking molds.",
+            "Mother and baby cat wearing puppy costumes are arranging snack shelves.",
+            "Mother and baby cat wearing puppy costumes are packing lunch boxes.",
+            "Mother and baby cat wearing puppy costumes are cleaning trays.",
+            "Mother and baby cat wearing puppy costumes are sketching café layouts.",
+            "Mother and baby cat wearing puppy costumes are arranging cookie jars.",
+            "Mother and baby cat wearing puppy costumes are preparing fruit salads.",
+            "Mother and baby cat wearing puppy costumes are decorating gift bags.",
+            "Mother and baby cat wearing puppy costumes are sorting ribbons.",
+            "Mother and baby cat wearing puppy costumes are arranging pastry labels.",
+            "Mother and baby cat wearing puppy costumes are hosting a tasting table.",
+            "Mother and baby cat wearing puppy costumes are cleaning drink dispensers.",
+            "Mother and baby cat wearing puppy costumes are folding menu cards.",
+            "Mother and baby cat wearing puppy costumes are arranging table flowers.",
+            "Mother and baby cat wearing puppy costumes are stacking snack crates.",
+            "Mother and baby cat wearing puppy costumes are organizing condiment bottles.",
+            "Mother and baby cat wearing puppy costumes are preparing picnic hampers.",
+            "Mother and baby cat wearing puppy costumes are labeling bakery shelves.",
+            "Mother and baby cat wearing puppy costumes are arranging juice stands.",
+            "Mother and baby cat wearing puppy costumes are dusting counters.",
+
+            // Fox Themes (151-200)
+            "Mother and baby cat wearing fox costumes are running a woodland bakery.",
+            "Mother and baby cat wearing fox costumes are arranging berry pies.",
+            "Mother and baby cat wearing fox costumes are sketching forest maps.",
+            "Mother and baby cat wearing fox costumes are organizing mushroom baskets.",
+            "Mother and baby cat wearing fox costumes are preparing picnic hampers.",
+            "Mother and baby cat wearing fox costumes are decorating a forest café.",
+            "Mother and baby cat wearing fox costumes are labeling jam jars.",
+            "Mother and baby cat wearing fox costumes are arranging rustic tables.",
+            "Mother and baby cat wearing fox costumes are carrying wooden trays.",
+            "Mother and baby cat wearing fox costumes are browsing a forest market.",
+            "Mother and baby cat wearing fox costumes are baking honey muffins.",
+            "Mother and baby cat wearing fox costumes are painting wooden signs.",
+            "Mother and baby cat wearing fox costumes are sorting berry crates.",
+            "Mother and baby cat wearing fox costumes are arranging candle jars.",
+            "Mother and baby cat wearing fox costumes are hosting a tasting table.",
+            "Mother and baby cat wearing fox costumes are folding picnic cloths.",
+            "Mother and baby cat wearing fox costumes are cleaning bakery counters.",
+            "Mother and baby cat wearing fox costumes are sketching recipe cards.",
+            "Mother and baby cat wearing fox costumes are arranging dessert shelves.",
+            "Mother and baby cat wearing fox costumes are waving at visitors.",
+            "Mother and baby cat wearing fox costumes are preparing fruit tarts.",
+            "Mother and baby cat wearing fox costumes are decorating window displays.",
+            "Mother and baby cat wearing fox costumes are sorting baking tools.",
+            "Mother and baby cat wearing fox costumes are arranging forest bouquets.",
+            "Mother and baby cat wearing fox costumes are packing gift boxes.",
+            "Mother and baby cat wearing fox costumes are trimming herb bundles.",
+            "Mother and baby cat wearing fox costumes are setting picnic tables.",
+            "Mother and baby cat wearing fox costumes are browsing craft stalls.",
+            "Mother and baby cat wearing fox costumes are organizing pantry jars.",
+            "Mother and baby cat wearing fox costumes are cleaning wooden benches.",
+            "Mother and baby cat wearing fox costumes are decorating pastry boxes.",
+            "Mother and baby cat wearing fox costumes are sketching menu boards.",
+            "Mother and baby cat wearing fox costumes are arranging jam spoons.",
+            "Mother and baby cat wearing fox costumes are stacking wooden crates.",
+            "Mother and baby cat wearing fox costumes are polishing teapots.",
+            "Mother and baby cat wearing fox costumes are arranging table linens.",
+            "Mother and baby cat wearing fox costumes are packing picnic snacks.",
+            "Mother and baby cat wearing fox costumes are dusting shelves.",
+            "Mother and baby cat wearing fox costumes are labeling forest treats.",
+            "Mother and baby cat wearing fox costumes are smiling behind the counter.",
+            "Mother and baby cat wearing fox costumes are preparing berry drinks.",
+            "Mother and baby cat wearing fox costumes are folding napkins.",
+            "Mother and baby cat wearing fox costumes are organizing dessert trays.",
+            "Mother and baby cat wearing fox costumes are arranging dried flowers.",
+            "Mother and baby cat wearing fox costumes are preparing breakfast spreads.",
+            "Mother and baby cat wearing fox costumes are cleaning baking pans.",
+            "Mother and baby cat wearing fox costumes are stacking bread loaves.",
+            "Mother and baby cat wearing fox costumes are decorating chalkboards.",
+            "Mother and baby cat wearing fox costumes are arranging fruit baskets.",
+            "Mother and baby cat wearing fox costumes are carrying picnic mats.",
+
+            // Panda Themes (201-250)
+            "Mother and baby cat wearing panda costumes are running a bamboo café.",
+            "Mother and baby cat wearing panda costumes are arranging bamboo baskets.",
+            "Mother and baby cat wearing panda costumes are preparing leafy snacks.",
+            "Mother and baby cat wearing panda costumes are decorating café counters.",
+            "Mother and baby cat wearing panda costumes are sorting bamboo trays.",
+            "Mother and baby cat wearing panda costumes are painting soft green signs.",
+            "Mother and baby cat wearing panda costumes are organizing picnic boxes.",
+            "Mother and baby cat wearing panda costumes are folding cloth napkins.",
+            "Mother and baby cat wearing panda costumes are arranging fruit platters.",
+            "Mother and baby cat wearing panda costumes are browsing a garden market.",
+            "Mother and baby cat wearing panda costumes are preparing rice treats.",
+            "Mother and baby cat wearing panda costumes are stacking wooden bowls.",
+            "Mother and baby cat wearing panda costumes are labeling snack jars.",
+            "Mother and baby cat wearing panda costumes are cleaning bamboo tables.",
+            "Mother and baby cat wearing panda costumes are sketching café layouts.",
+            "Mother and baby cat wearing panda costumes are arranging dessert cups.",
+            "Mother and baby cat wearing panda costumes are preparing tea sets.",
+            "Mother and baby cat wearing panda costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing panda costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing panda costumes are decorating pastry boxes.",
+            "Mother and baby cat wearing panda costumes are sorting baking tools.",
+            "Mother and baby cat wearing panda costumes are arranging flower pots.",
+            "Mother and baby cat wearing panda costumes are setting tasting spoons.",
+            "Mother and baby cat wearing panda costumes are wiping café counters.",
+            "Mother and baby cat wearing panda costumes are preparing snack trays.",
+            "Mother and baby cat wearing panda costumes are folding menu cards.",
+            "Mother and baby cat wearing panda costumes are labeling bamboo goods.",
+            "Mother and baby cat wearing panda costumes are arranging table decor.",
+            "Mother and baby cat wearing panda costumes are packing takeaway bags.",
+            "Mother and baby cat wearing panda costumes are smiling at customers.",
+            "Mother and baby cat wearing panda costumes are organizing dessert jars.",
+            "Mother and baby cat wearing panda costumes are dusting shelves.",
+            "Mother and baby cat wearing panda costumes are preparing fruit salads.",
+            "Mother and baby cat wearing panda costumes are arranging picnic mats.",
+            "Mother and baby cat wearing panda costumes are stacking plates.",
+            "Mother and baby cat wearing panda costumes are cleaning tea cups.",
+            "Mother and baby cat wearing panda costumes are arranging bamboo décor.",
+            "Mother and baby cat wearing panda costumes are browsing craft supplies.",
+            "Mother and baby cat wearing panda costumes are folding aprons.",
+            "Mother and baby cat wearing panda costumes are closing the café.",
+            "Mother and baby cat wearing panda costumes are preparing picnic lunches.",
+            "Mother and baby cat wearing panda costumes are arranging snack boards.",
+            "Mother and baby cat wearing panda costumes are labeling food boxes.",
+            "Mother and baby cat wearing panda costumes are organizing kitchen drawers.",
+            "Mother and baby cat wearing panda costumes are preparing smoothie bowls.",
+            "Mother and baby cat wearing panda costumes are arranging café chairs.",
+            "Mother and baby cat wearing panda costumes are wiping menu boards.",
+            "Mother and baby cat wearing panda costumes are sorting drink bottles.",
+            "Mother and baby cat wearing panda costumes are packing gift sets.",
+            "Mother and baby cat wearing panda costumes are waving goodbye.",
+
+            // Tiger Themes (251-300)
+            "Mother and baby cat wearing tiger costumes are running a jungle juice bar.",
+            "Mother and baby cat wearing tiger costumes are arranging tropical fruit.",
+            "Mother and baby cat wearing tiger costumes are preparing smoothie bowls.",
+            "Mother and baby cat wearing tiger costumes are decorating jungle counters.",
+            "Mother and baby cat wearing tiger costumes are sorting fruit crates.",
+            "Mother and baby cat wearing tiger costumes are painting leafy signs.",
+            "Mother and baby cat wearing tiger costumes are organizing picnic trays.",
+            "Mother and baby cat wearing tiger costumes are folding tablecloths.",
+            "Mother and baby cat wearing tiger costumes are arranging drink jars.",
+            "Mother and baby cat wearing tiger costumes are browsing a jungle market.",
+            "Mother and baby cat wearing tiger costumes are preparing fruit pops.",
+            "Mother and baby cat wearing tiger costumes are stacking coconut bowls.",
+            "Mother and baby cat wearing tiger costumes are labeling juice bottles.",
+            "Mother and baby cat wearing tiger costumes are cleaning bar counters.",
+            "Mother and baby cat wearing tiger costumes are sketching menu ideas.",
+            "Mother and baby cat wearing tiger costumes are arranging dessert cups.",
+            "Mother and baby cat wearing tiger costumes are preparing iced drinks.",
+            "Mother and baby cat wearing tiger costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing tiger costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing tiger costumes are decorating takeaway boxes.",
+            "Mother and baby cat wearing tiger costumes are sorting straws.",
+            "Mother and baby cat wearing tiger costumes are arranging leaf décor.",
+            "Mother and baby cat wearing tiger costumes are setting tasting cups.",
+            "Mother and baby cat wearing tiger costumes are wiping prep tables.",
+            "Mother and baby cat wearing tiger costumes are preparing snack platters.",
+            "Mother and baby cat wearing tiger costumes are folding menu cards.",
+            "Mother and baby cat wearing tiger costumes are labeling tropical treats.",
+            "Mother and baby cat wearing tiger costumes are arranging table plants.",
+            "Mother and baby cat wearing tiger costumes are packing juice sets.",
+            "Mother and baby cat wearing tiger costumes are smiling at guests.",
+            "Mother and baby cat wearing tiger costumes are organizing dessert jars.",
+            "Mother and baby cat wearing tiger costumes are dusting shelves.",
+            "Mother and baby cat wearing tiger costumes are preparing fruit salads.",
+            "Mother and baby cat wearing tiger costumes are arranging picnic mats.",
+            "Mother and baby cat wearing tiger costumes are stacking plates.",
+            "Mother and baby cat wearing tiger costumes are cleaning blenders.",
+            "Mother and baby cat wearing tiger costumes are arranging jungle lights.",
+            "Mother and baby cat wearing tiger costumes are browsing craft items.",
+            "Mother and baby cat wearing tiger costumes are folding aprons.",
+            "Mother and baby cat wearing tiger costumes are closing the bar.",
+            "Mother and baby cat wearing tiger costumes are preparing fresh smoothies.",
+            "Mother and baby cat wearing tiger costumes are arranging snack boards.",
+            "Mother and baby cat wearing tiger costumes are labeling food cups.",
+            "Mother and baby cat wearing tiger costumes are organizing kitchen drawers.",
+            "Mother and baby cat wearing tiger costumes are preparing frozen treats.",
+            "Mother and baby cat wearing tiger costumes are arranging bar stools.",
+            "Mother and baby cat wearing tiger costumes are wiping menu boards.",
+            "Mother and baby cat wearing tiger costumes are sorting drink lids.",
+            "Mother and baby cat wearing tiger costumes are packing gift bags.",
+            "Mother and baby cat wearing tiger costumes are waving goodbye.",
+
+            // Frog Themes (301-350)
+            "Mother and baby cat wearing frog costumes are running a pond café.",
+            "Mother and baby cat wearing frog costumes are arranging lily tables.",
+            "Mother and baby cat wearing frog costumes are preparing fruit drinks.",
+            "Mother and baby cat wearing frog costumes are decorating pond counters.",
+            "Mother and baby cat wearing frog costumes are sorting picnic baskets.",
+            "Mother and baby cat wearing frog costumes are painting nature signs.",
+            "Mother and baby cat wearing frog costumes are organizing snack trays.",
+            "Mother and baby cat wearing frog costumes are folding leaf napkins.",
+            "Mother and baby cat wearing frog costumes are arranging drink jars.",
+            "Mother and baby cat wearing frog costumes are browsing a riverside market.",
+            "Mother and baby cat wearing frog costumes are preparing herbal snacks.",
+            "Mother and baby cat wearing frog costumes are stacking wooden bowls.",
+            "Mother and baby cat wearing frog costumes are labeling drink bottles.",
+            "Mother and baby cat wearing frog costumes are cleaning café counters.",
+            "Mother and baby cat wearing frog costumes are sketching pond scenes.",
+            "Mother and baby cat wearing frog costumes are arranging dessert cups.",
+            "Mother and baby cat wearing frog costumes are preparing iced tea.",
+            "Mother and baby cat wearing frog costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing frog costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing frog costumes are decorating takeaway boxes.",
+            "Mother and baby cat wearing frog costumes are sorting utensils.",
+            "Mother and baby cat wearing frog costumes are arranging water plants.",
+            "Mother and baby cat wearing frog costumes are setting tasting cups.",
+            "Mother and baby cat wearing frog costumes are wiping tables.",
+            "Mother and baby cat wearing frog costumes are preparing snack platters.",
+            "Mother and baby cat wearing frog costumes are folding menu cards.",
+            "Mother and baby cat wearing frog costumes are labeling pond treats.",
+            "Mother and baby cat wearing frog costumes are arranging table decor.",
+            "Mother and baby cat wearing frog costumes are packing snack bags.",
+            "Mother and baby cat wearing frog costumes are smiling at guests.",
+            "Mother and baby cat wearing frog costumes are organizing dessert jars.",
+            "Mother and baby cat wearing frog costumes are dusting shelves.",
+            "Mother and baby cat wearing frog costumes are preparing fruit salads.",
+            "Mother and baby cat wearing frog costumes are arranging picnic mats.",
+            "Mother and baby cat wearing frog costumes are stacking plates.",
+            "Mother and baby cat wearing frog costumes are cleaning drink jars.",
+            "Mother and baby cat wearing frog costumes are arranging lantern lights.",
+            "Mother and baby cat wearing frog costumes are browsing craft items.",
+            "Mother and baby cat wearing frog costumes are folding aprons.",
+            "Mother and baby cat wearing frog costumes are closing the café.",
+            "Mother and baby cat wearing frog costumes are preparing juice blends.",
+            "Mother and baby cat wearing frog costumes are arranging snack boards.",
+            "Mother and baby cat wearing frog costumes are labeling food cups.",
+            "Mother and baby cat wearing frog costumes are organizing kitchen drawers.",
+            "Mother and baby cat wearing frog costumes are preparing frozen treats.",
+            "Mother and baby cat wearing frog costumes are arranging café stools.",
+            "Mother and baby cat wearing frog costumes are wiping menu boards.",
+            "Mother and baby cat wearing frog costumes are sorting lids.",
+            "Mother and baby cat wearing frog costumes are packing gift bags.",
+            "Mother and baby cat wearing frog costumes are waving goodbye.",
+
+            // Penguin Themes (351-400)
+            "Mother and baby cat wearing penguin costumes are running an ice café.",
+            "Mother and baby cat wearing penguin costumes are arranging snow desserts.",
+            "Mother and baby cat wearing penguin costumes are preparing frozen treats.",
+            "Mother and baby cat wearing penguin costumes are decorating icy counters.",
+            "Mother and baby cat wearing penguin costumes are sorting drink cups.",
+            "Mother and baby cat wearing penguin costumes are painting frosty signs.",
+            "Mother and baby cat wearing penguin costumes are organizing picnic trays.",
+            "Mother and baby cat wearing penguin costumes are folding thermal cloths.",
+            "Mother and baby cat wearing penguin costumes are arranging drink jars.",
+            "Mother and baby cat wearing penguin costumes are browsing a winter market.",
+            "Mother and baby cat wearing penguin costumes are preparing fruit ice pops.",
+            "Mother and baby cat wearing penguin costumes are stacking insulated bowls.",
+            "Mother and baby cat wearing penguin costumes are labeling drink bottles.",
+            "Mother and baby cat wearing penguin costumes are cleaning café counters.",
+            "Mother and baby cat wearing penguin costumes are sketching menu boards.",
+            "Mother and baby cat wearing penguin costumes are arranging dessert cups.",
+            "Mother and baby cat wearing penguin costumes are preparing chilled drinks.",
+            "Mother and baby cat wearing penguin costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing penguin costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing penguin costumes are decorating takeaway boxes.",
+            "Mother and baby cat wearing penguin costumes are sorting straws.",
+            "Mother and baby cat wearing penguin costumes are arranging winter décor.",
+            "Mother and baby cat wearing penguin costumes are setting tasting cups.",
+            "Mother and baby cat wearing penguin costumes are wiping prep tables.",
+            "Mother and baby cat wearing penguin costumes are preparing snack platters.",
+            "Mother and baby cat wearing penguin costumes are folding menu cards.",
+            "Mother and baby cat wearing penguin costumes are labeling frozen treats.",
+            "Mother and baby cat wearing penguin costumes are arranging table decor.",
+            "Mother and baby cat wearing penguin costumes are packing gift sets.",
+            "Mother and baby cat wearing penguin costumes are smiling at guests.",
+            "Mother and baby cat wearing penguin costumes are organizing dessert jars.",
+            "Mother and baby cat wearing penguin costumes are dusting shelves.",
+            "Mother and baby cat wearing penguin costumes are preparing fruit salads.",
+            "Mother and baby cat wearing penguin costumes are arranging picnic mats.",
+            "Mother and baby cat wearing penguin costumes are stacking plates.",
+            "Mother and baby cat wearing penguin costumes are cleaning blenders.",
+            "Mother and baby cat wearing penguin costumes are arranging soft lights.",
+            "Mother and baby cat wearing penguin costumes are browsing craft items.",
+            "Mother and baby cat wearing penguin costumes are folding aprons.",
+            "Mother and baby cat wearing penguin costumes are closing the café.",
+            "Mother and baby cat wearing penguin costumes are preparing icy drinks.",
+            "Mother and baby cat wearing penguin costumes are arranging snack boards.",
+            "Mother and baby cat wearing penguin costumes are labeling food cups.",
+            "Mother and baby cat wearing penguin costumes are organizing kitchen drawers.",
+            "Mother and baby cat wearing penguin costumes are preparing frozen snacks.",
+            "Mother and baby cat wearing penguin costumes are arranging café stools.",
+            "Mother and baby cat wearing penguin costumes are wiping menu boards.",
+            "Mother and baby cat wearing penguin costumes are sorting lids.",
+            "Mother and baby cat wearing penguin costumes are packing gift bags.",
+            "Mother and baby cat wearing penguin costumes are waving goodbye.",
+
+            // Cow Themes (401-440)
+            "Mother and baby cat wearing cow costumes are running a milk bar.",
+            "Mother and baby cat wearing cow costumes are arranging dairy desserts.",
+            "Mother and baby cat wearing cow costumes are preparing milkshakes.",
+            "Mother and baby cat wearing cow costumes are decorating farm counters.",
+            "Mother and baby cat wearing cow costumes are sorting milk bottles.",
+            "Mother and baby cat wearing cow costumes are painting barn signs.",
+            "Mother and baby cat wearing cow costumes are organizing picnic trays.",
+            "Mother and baby cat wearing cow costumes are folding cloth napkins.",
+            "Mother and baby cat wearing cow costumes are arranging drink jars.",
+            "Mother and baby cat wearing cow costumes are browsing a farm market.",
+            "Mother and baby cat wearing cow costumes are preparing cheese snacks.",
+            "Mother and baby cat wearing cow costumes are stacking wooden bowls.",
+            "Mother and baby cat wearing cow costumes are labeling dairy jars.",
+            "Mother and baby cat wearing cow costumes are cleaning café counters.",
+            "Mother and baby cat wearing cow costumes are sketching menu ideas.",
+            "Mother and baby cat wearing cow costumes are arranging dessert cups.",
+            "Mother and baby cat wearing cow costumes are preparing iced milk.",
+            "Mother and baby cat wearing cow costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing cow costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing cow costumes are decorating takeaway boxes.",
+            "Mother and baby cat wearing cow costumes are sorting straws.",
+            "Mother and baby cat wearing cow costumes are arranging farm décor.",
+            "Mother and baby cat wearing cow costumes are setting tasting cups.",
+            "Mother and baby cat wearing cow costumes are wiping prep tables.",
+            "Mother and baby cat wearing cow costumes are preparing snack platters.",
+            "Mother and baby cat wearing cow costumes are folding menu cards.",
+            "Mother and baby cat wearing cow costumes are labeling dairy treats.",
+            "Mother and baby cat wearing cow costumes are arranging table decor.",
+            "Mother and baby cat wearing cow costumes are packing milk gift sets.",
+            "Mother and baby cat wearing cow costumes are smiling at guests.",
+            "Mother and baby cat wearing cow costumes are organizing dessert jars.",
+            "Mother and baby cat wearing cow costumes are dusting shelves.",
+            "Mother and baby cat wearing cow costumes are preparing fruit salads.",
+            "Mother and baby cat wearing cow costumes are arranging picnic mats.",
+            "Mother and baby cat wearing cow costumes are stacking plates.",
+            "Mother and baby cat wearing cow costumes are cleaning blenders.",
+            "Mother and baby cat wearing cow costumes are arranging barn lights.",
+            "Mother and baby cat wearing cow costumes are browsing craft items.",
+            "Mother and baby cat wearing cow costumes are folding aprons.",
+            "Mother and baby cat wearing cow costumes are closing the milk bar.",
+
+            // Sheep Themes (441-470)
+            "Mother and baby cat wearing sheep costumes are running a wool craft café.",
+            "Mother and baby cat wearing sheep costumes are arranging yarn baskets.",
+            "Mother and baby cat wearing sheep costumes are knitting soft scarves.",
+            "Mother and baby cat wearing sheep costumes are decorating cozy counters.",
+            "Mother and baby cat wearing sheep costumes are sorting wool bundles.",
+            "Mother and baby cat wearing sheep costumes are painting cottage signs.",
+            "Mother and baby cat wearing sheep costumes are organizing picnic trays.",
+            "Mother and baby cat wearing sheep costumes are folding linen napkins.",
+            "Mother and baby cat wearing sheep costumes are arranging tea jars.",
+            "Mother and baby cat wearing sheep costumes are browsing a craft market.",
+            "Mother and baby cat wearing sheep costumes are preparing butter cookies.",
+            "Mother and baby cat wearing sheep costumes are stacking ceramic plates.",
+            "Mother and baby cat wearing sheep costumes are labeling wool tags.",
+            "Mother and baby cat wearing sheep costumes are cleaning café counters.",
+            "Mother and baby cat wearing sheep costumes are sketching knitting patterns.",
+            "Mother and baby cat wearing sheep costumes are arranging dessert cups.",
+            "Mother and baby cat wearing sheep costumes are preparing warm milk drinks.",
+            "Mother and baby cat wearing sheep costumes are organizing pantry shelves.",
+            "Mother and baby cat wearing sheep costumes are carrying picnic baskets.",
+            "Mother and baby cat wearing sheep costumes are decorating takeaway boxes.",
+            "Mother and baby cat wearing sheep costumes are sorting knitting needles.",
+            "Mother and baby cat wearing sheep costumes are arranging soft décor.",
+            "Mother and baby cat wearing sheep costumes are setting tasting cups.",
+            "Mother and baby cat wearing sheep costumes are wiping prep tables.",
+            "Mother and baby cat wearing sheep costumes are preparing snack platters.",
+            "Mother and baby cat wearing sheep costumes are folding menu cards.",
+            "Mother and baby cat wearing sheep costumes are labeling cottage treats.",
+            "Mother and baby cat wearing sheep costumes are arranging table decor.",
+            "Mother and baby cat wearing sheep costumes are packing wool gift sets.",
+            "Mother and baby cat wearing sheep costumes are smiling at guests.",
+
+            // Misc Animals (471-500)
+            "Mother and baby cat wearing pig costumes are running a countryside bakery.",
+            "Mother and baby cat wearing pig costumes are arranging pastry trays.",
+            "Mother and baby cat wearing pig costumes are baking fruit pies.",
+            "Mother and baby cat wearing pig costumes are decorating wooden counters.",
+            "Mother and baby cat wearing pig costumes are sorting ingredient baskets.",
+            "Mother and baby cat wearing pig costumes are painting bakery signs.",
+            "Mother and baby cat wearing turtle costumes are running a seaside snack bar.",
+            "Mother and baby cat wearing turtle costumes are arranging shell baskets.",
+            "Mother and baby cat wearing turtle costumes are preparing fruit smoothies.",
+            "Mother and baby cat wearing turtle costumes are decorating beach counters.",
+            "Mother and baby cat wearing otter costumes are running a riverside café.",
+            "Mother and baby cat wearing otter costumes are arranging pebble trays.",
+            "Mother and baby cat wearing otter costumes are preparing berry drinks.",
+            "Mother and baby cat wearing otter costumes are decorating river counters.",
+            "Mother and baby cat wearing otter costumes are sorting picnic baskets.",
+            "Mother and baby cat wearing parrot costumes are running a tropical juice bar.",
+            "Mother and baby cat wearing parrot costumes are arranging fruit displays.",
+            "Mother and baby cat wearing parrot costumes are preparing colorful smoothies.",
+            "Mother and baby cat wearing parrot costumes are decorating bright counters.",
+            "Mother and baby cat wearing koala costumes are running a eucalyptus tea café.",
+            "Mother and baby cat wearing koala costumes are arranging leaf baskets.",
+            "Mother and baby cat wearing koala costumes are preparing herbal drinks.",
+            "Mother and baby cat wearing goat costumes are running a mountain cheese stall.",
+            "Mother and baby cat wearing goat costumes are arranging cheese boards.",
+            "Mother and baby cat wearing goat costumes are preparing milk snacks.",
+            "Mother and baby cat wearing unicorn costumes are running a pastel magic café.",
+            "Mother and baby cat wearing dragon costumes are preparing sparkling fruit drinks.",
+            "Mother and baby cat wearing griffin costumes are arranging sky picnic baskets.",
+            "Mother and baby cat wearing fairy-deer costumes are hosting a meadow tea party.",
+            "Mother and baby cat wearing cloud-fox costumes are decorating a dream café."
+        ];
+
+        function generatePrompt() {
+            const randomIndex = Math.floor(Math.random() * prompts.length);
+            const resultDiv = document.getElementById("result");
             
-            // Random Logic
-            if (selectedTheme === 'random') {
-                const keys = Object.keys(data);
-                finalTheme = keys[Math.floor(Math.random() * keys.length)];
-            } else {
-                finalTheme = selectedTheme;
-            }
-
-            const themeData = data[finalTheme];
-            const activities = themeData.actions;
-            const finalActivity = activities[Math.floor(Math.random() * activities.length)];
-
-            // Animation Simulation
+            // Animation effect
+            resultDiv.style.opacity = 0;
             setTimeout(() => {
-                document.getElementById('emojiIcon').innerText = themeData.emoji;
-                document.getElementById('themeDisplay').innerHTML = `ชุด: ${finalTheme} Theme`;
-                document.getElementById('activityDisplay').innerHTML = `กำลัง... ${finalActivity}`;
-                
-                // Update Copy Text
-                const copyText = `🐱 Mother & Baby Cat Activity 🍼\n` +
-                                 `👗 Costume: ${themeData.emoji} ${finalTheme} Theme\n` +
-                                 `🧺 Activity: ${finalActivity}\n` +
-                                 `#MeowAndBaby #CuteActivity`;
-                
-                document.getElementById('copyArea').value = copyText;
-                document.getElementById('btnCopy').style.display = 'flex'; // Show copy button
-
-                btn.innerHTML = "✨ สุ่มกิจกรรม (Spin)";
-                btn.disabled = false;
-            }, 600);
+                resultDiv.innerText = prompts[randomIndex];
+                resultDiv.style.opacity = 1;
+            }, 200);
         }
 
-        function copyText() {
-            const copyArea = document.getElementById("copyArea");
-            copyArea.select();
-            copyArea.setSelectionRange(0, 99999); 
-            
-            navigator.clipboard.writeText(copyArea.value).then(() => {
-                showToast();
+        function copyToClipboard() {
+            const text = document.getElementById("result").innerText;
+            if (text === "Click \"Random\" to start! ✨") return;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
             });
         }
-
-        function showToast() {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
+        
+        // Initial transition
+        document.getElementById("result").style.transition = "opacity 0.2s ease-in-out";
     </script>
 </body>
 </html>
