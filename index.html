@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meow & Baby: Dress Up & Play! 🐱🎀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Kodchasan:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fff0f6; /* Soft Pink */
+            --card-bg: #ffffff;
+            --primary: #ffadd2; /* Sakura Pink */
+            --secondary: #b7e4c7; /* Mint Green */
+            --accent: #ffb7b2; /* Peach */
+            --text: #85586f;
+            --border-radius: 25px;
+            --shadow: 0 8px 20px rgba(255, 173, 210, 0.3);
+        }
+
+        body {
+            font-family: 'Mali', cursive;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(#ffadd2 15%, transparent 16%),
+                radial-gradient(#b7e4c7 15%, transparent 16%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            background: #fff;
+            color: #ff85a2;
+            font-size: 2.2rem;
+            padding: 20px 40px;
+            border-radius: 50px;
+            display: inline-block;
+            border: 5px solid #ffdeeb;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h1::after {
+            content: "🐱";
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 2.5rem;
+            transform: rotate(15deg);
+        }
+
+        /* Result Area */
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px 20px;
+            border: 4px dashed var(--primary);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .emoji-display {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #themeDisplay {
+            font-size: 1.5rem;
+            color: #ff85a2;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        #activityDisplay {
+            font-size: 1.2rem;
+            color: #6d6d6d;
+            line-height: 1.6;
+        }
+
+        /* Controls */
+        .controls {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        select {
+            padding: 12px 20px;
+            border: 2px solid #ffdeeb;
+            border-radius: 50px;
+            font-family: 'Kodchasan', sans-serif;
+            font-size: 1rem;
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+        select:focus { border-color: var(--primary); }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .main-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Mali', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+        }
+        .main-btn:active { transform: translateY(4px); box-shadow: none; }
+
+        .spin-btn { background: linear-gradient(to right, #ff9aa2, #ffb7b2); }
+        .spin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 rgba(255, 154, 162, 0.4); }
+
+        .copy-btn { 
+            background: linear-gradient(to right, #a0c4ff, #bdb2ff); 
+            display: none; /* ซ่อนตอนแรก */
+        }
+        .copy-btn:hover { transform: translateY(-3px); }
+
+        /* Text Area for Copy */
+        #copyArea {
+            width: 0;
+            height: 0;
+            opacity: 0;
+            position: absolute;
+        }
+
+        /* Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #ff85a2;
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🐱 Meow & Baby Activities 🍼</h1>
+
+        <div class="result-card">
+            <div class="emoji-display" id="emojiIcon">🥚</div>
+            <div id="themeDisplay">เลือกธีมชุดแล้วกดสุ่มเลย!</div>
+            <div id="activityDisplay">...กิจกรรมน่ารักๆ รออยู่...</div>
+        </div>
+
+        <div class="controls">
+            <label style="font-weight:bold; color:#ff85a2;">🎀 เลือกธีมชุด (Costume Theme)</label>
+            <select id="themeSelect">
+                <option value="random">🎲 สุ่มทุกชุด (Surprise Me!)</option>
+                <option value="Bunny">🐰 กระต่ายน้อย (Bunny)</option>
+                <option value="Bear">🐻 หมีน้อย (Bear)</option>
+                <option value="Puppy">🐶 ลูกสุนัข (Puppy)</option>
+                <option value="Fox">🦊 จิ้งจอก (Fox)</option>
+                <option value="Panda">🐼 แพนด้า (Panda)</option>
+                <option value="Tiger">🐯 เสือ (Tiger)</option>
+                <option value="Frog">🐸 กบน้อย (Frog)</option>
+                <option value="Penguin">🐧 เพนกวิน (Penguin)</option>
+                <option value="Cow">🐮 วัวนม (Cow)</option>
+                <option value="Monkey">🐵 ลิงน้อย (Monkey)</option>
+                <option value="Chicken">🐔 ลูกเจี๊ยบ (Chicken)</option>
+                <option value="Owl">🦉 นกฮูก (Owl)</option>
+                <option value="Deer">🦌 กวางน้อย (Deer)</option>
+                <option value="Sheep">🐑 แกะนุ่มนิ่ม (Sheep)</option>
+                <option value="Pig">🐷 หมูอู๊ด (Pig)</option>
+                <option value="Turtle">🐢 เต่า (Turtle)</option>
+                <option value="Otter">🦦 นาก (Otter)</option>
+                <option value="Parrot">🦜 นกแก้ว (Parrot)</option>
+                <option value="Koala">🐨 โคอาล่า (Koala)</option>
+                <option value="Goat">🐐 แพะ (Goat)</option>
+                <option value="Fantasy">🦄 แฟนตาซี (Fantasy)</option>
+            </select>
+        </div>
+
+        <div class="btn-group">
+            <button class="main-btn spin-btn" onclick="spinActivity()">✨ สุ่มกิจกรรม (Spin)</button>
+            <button class="main-btn copy-btn" id="btnCopy" onclick="copyText()">📋 คัดลอก (Copy)</button>
+        </div>
+        
+        <textarea id="copyArea"></textarea>
+    </div>
+
+    <div id="toast">✅ คัดลอกเรียบร้อย! พร้อมโพสต์แล้วค่า</div>
+
+    <script>
+        // --- DATA SETS (ย่อส่วนจากข้อมูล 1-1000 ที่ให้มา เพื่อประสิทธิภาพ) ---
+        const data = {
+            "Bunny": {
+                emoji: "🐰",
+                actions: [
+                    "baking carrot cookies", "picking flowers in a meadow", "running a pastel bakery stall", "decorating Easter eggs", "planting carrot seedlings", 
+                    "hosting a garden tea party", "painting wooden signs", "browsing a flower market", "carrying picnic baskets", "arranging pastel bouquets",
+                    "making strawberry jam", "visiting a carrot farm", "sketching flowers outdoors", "folding picnic blankets", "preparing fruit tarts",
+                    "crafting flower crowns", "strolling through a park", "baking soft bread rolls", "shopping at a craft fair", "preparing lemonade"
+                ]
+            },
+            "Bear": {
+                emoji: "🐻",
+                actions: [
+                    "running a honey shop", "harvesting honey jars", "baking honey bread", "organizing picnic hampers", "painting forest signs",
+                    "tasting berry jam", "sorting honeycomb frames", "decorating rustic tables", "visiting a forest market", "carving wooden spoons",
+                    "hosting a honey tasting", "brewing herbal tea", "sorting pinecones", "decorating bakery windows", "baking oat cookies",
+                    "trimming herb bundles", "tasting fresh honey", "decorating bread bags", "preparing breakfast spreads", "arranging forest bouquets"
+                ]
+            },
+            "Puppy": {
+                emoji: "🐶",
+                actions: [
+                    "running a dog café", "baking bone-shaped cookies", "decorating a food truck", "washing fruit bowls", "arranging café menus",
+                    "preparing juice bottles", "hosting a snack stand", "arranging cupcake trays", "cleaning café counters", "sketching menu art",
+                    "packing takeaway boxes", "arranging dessert jars", "decorating pastry bags", "brewing iced tea", "painting chalkboards",
+                    "arranging snack shelves", "packing lunch boxes", "arranging cookie jars", "hosting a tasting table", "cleaning drink dispensers"
+                ]
+            },
+            "Fox": {
+                emoji: "🦊",
+                actions: [
+                    "running a woodland bakery", "arranging berry pies", "sketching forest maps", "organizing mushroom baskets", "decorating a forest café",
+                    "labeling jam jars", "browsing a forest market", "baking honey muffins", "painting wooden signs", "hosting a tasting table",
+                    "sketching recipe cards", "waving at visitors", "preparing fruit tarts", "decorating window displays", "trimming herb bundles",
+                    "browsing craft stalls", "decorating pastry boxes", "polishing teapots", "labeling forest treats", "preparing berry drinks"
+                ]
+            },
+            "Panda": {
+                emoji: "🐼",
+                actions: [
+                    "running a bamboo café", "arranging bamboo baskets", "preparing leafy snacks", "decorating café counters", "painting soft green signs",
+                    "folding cloth napkins", "arranging fruit platters", "browsing a garden market", "preparing rice treats", "stacking wooden bowls",
+                    "labeling snack jars", "preparing tea sets", "arranging flower pots", "setting tasting spoons", "wiping café counters",
+                    "preparing snack trays", "labeling bamboo goods", "packing takeaway bags", "preparing fruit salads", "arranging bamboo décor"
+                ]
+            },
+            "Tiger": {
+                emoji: "🐯",
+                actions: [
+                    "running a jungle juice bar", "arranging tropical fruit", "preparing smoothie bowls", "decorating jungle counters", "painting leafy signs",
+                    "browsing a jungle market", "preparing fruit pops", "stacking coconut bowls", "labeling juice bottles", "preparing iced drinks",
+                    "decorating takeaway boxes", "arranging leaf décor", "setting tasting cups", "preparing snack platters", "labeling tropical treats",
+                    "packing juice sets", "preparing fruit salads", "cleaning blenders", "preparing fresh smoothies", "packing gift bags"
+                ]
+            },
+            "Frog": {
+                emoji: "🐸",
+                actions: [
+                    "running a pond café", "arranging lily tables", "preparing fruit drinks", "decorating pond counters", "painting nature signs",
+                    "folding leaf napkins", "browsing a riverside market", "preparing herbal snacks", "stacking wooden bowls", "labeling drink bottles",
+                    "sketching pond scenes", "preparing iced tea", "arranging water plants", "setting tasting cups", "preparing snack platters",
+                    "labeling pond treats", "arranging lantern lights", "preparing juice blends", "preparing frozen treats", "packing picnic snacks"
+                ]
+            },
+            "Penguin": {
+                emoji: "🐧",
+                actions: [
+                    "running an ice café", "arranging snow desserts", "preparing frozen treats", "decorating icy counters", "painting frosty signs",
+                    "folding thermal cloths", "browsing a winter market", "preparing fruit ice pops", "stacking insulated bowls", "labeling drink bottles",
+                    "preparing chilled drinks", "arranging winter décor", "setting tasting cups", "preparing snack platters", "labeling frozen treats",
+                    "preparing fruit salads", "cleaning blenders", "preparing icy drinks", "preparing snow desserts", "packing café orders"
+                ]
+            },
+            "Cow": {
+                emoji: "🐮",
+                actions: [
+                    "running a milk bar", "arranging dairy desserts", "preparing milkshakes", "decorating farm counters", "painting barn signs",
+                    "browsing a farm market", "preparing cheese snacks", "stacking wooden bowls", "labeling dairy jars", "preparing iced milk",
+                    "arranging farm décor", "setting tasting cups", "preparing snack platters", "labeling dairy treats", "packing milk gift sets",
+                    "preparing fruit salads", "cleaning blenders", "arranging barn lights", "preparing milkshakes", "closing the milk bar"
+                ]
+            },
+            "Monkey": {
+                emoji: "🐵",
+                actions: [
+                    "running a jungle smoothie bar", "arranging tropical fruit bowls", "preparing banana pancakes", "decorating bamboo counters", "painting jungle signs",
+                    "browsing a jungle market", "preparing coconut drinks", "labeling smoothie cups", "preparing fruit skewers", "arranging jungle décor",
+                    "preparing snack platters", "labeling tropical treats", "packing juice sets", "preparing fruit salads", "cleaning blenders",
+                    "arranging hanging vines", "preparing frozen bananas", "preparing chilled treats", "preparing fruit shakes", "packing jungle snacks"
+                ]
+            },
+            "Chicken": {
+                emoji: "🐔",
+                actions: [
+                    "running a countryside breakfast stall", "arranging egg baskets", "preparing fluffy omelets", "decorating wooden counters", "painting barn signs",
+                    "browsing a farm market", "preparing egg sandwiches", "labeling breakfast boxes", "preparing scrambled eggs", "arranging farm décor",
+                    "setting tasting plates", "preparing breakfast platters", "labeling farm treats", "packing breakfast sets", "preparing fruit salads",
+                    "arranging hanging signs", "preparing sunny-side eggs", "preparing baked snacks", "preparing egg tarts", "packing farm snacks"
+                ]
+            },
+            "Owl": {
+                emoji: "🦉",
+                actions: [
+                    "running a woodland library café", "arranging book stacks", "preparing herbal drinks", "decorating wooden shelves", "painting story signs",
+                    "organizing reading tables", "browsing a book market", "preparing berry scones", "labeling tea tins", "sketching bookmark designs",
+                    "preparing warm drinks", "arranging lamp décor", "preparing snack platters", "labeling woodland treats", "packing gift book sets",
+                    "preparing fruit salads", "cleaning teapots", "arranging soft lights", "preparing herbal drinks", "closing the café"
+                ]
+            },
+            "Deer": {
+                emoji: "🦌",
+                actions: [
+                    "running a meadow picnic café", "arranging wildflower baskets", "preparing fruit tarts", "decorating wooden counters", "painting meadow signs",
+                    "browsing a meadow market", "preparing berry drinks", "stacking wicker plates", "labeling picnic boxes", "sketching flower maps",
+                    "preparing herbal tea", "arranging meadow décor", "preparing snack platters", "labeling meadow treats", "packing picnic gift sets",
+                    "preparing fruit salads", "cleaning tea jars", "arranging lantern lights", "preparing berry drinks", "closing the picnic café"
+                ]
+            },
+            "Sheep": {
+                emoji: "🐑",
+                actions: [
+                    "running a wool craft café", "arranging yarn baskets", "knitting soft scarves", "decorating cozy counters", "painting cottage signs",
+                    "browsing a craft market", "preparing butter cookies", "labeling wool tags", "sketching knitting patterns", "preparing warm milk drinks",
+                    "arranging soft décor", "preparing snack platters", "labeling cottage treats", "packing wool gift sets", "preparing fruit salads",
+                    "cleaning teapots", "arranging fairy lights", "browsing fabric rolls", "preparing butter cookies", "closing the café"
+                ]
+            },
+            "Pig": {
+                emoji: "🐷",
+                actions: [
+                    "running a countryside bakery", "arranging pastry trays", "baking fruit pies", "decorating wooden counters", "painting bakery signs",
+                    "browsing a village market", "preparing bread rolls", "labeling pastry boxes", "sketching recipe boards", "preparing snack loaves",
+                    "arranging rustic décor", "preparing bakery platters", "labeling countryside treats", "packing pastry gift sets", "preparing fruit salads",
+                    "cleaning baking pans", "arranging hanging signs", "baking fruit pies", "preparing bread rolls", "closing the bakery"
+                ]
+            },
+            "Turtle": {
+                emoji: "🐢",
+                actions: [
+                    "running a seaside snack bar", "arranging shell baskets", "preparing fruit smoothies", "decorating beach counters", "painting ocean signs",
+                    "browsing a seaside market", "preparing coconut treats", "labeling snack cups", "sketching beach maps", "preparing iced juice",
+                    "arranging coastal décor", "preparing snack platters", "labeling seaside treats", "packing beach gift sets", "preparing fruit salads",
+                    "arranging picnic mats", "preparing fruit smoothies", "browsing a seaside market", "preparing coconut treats", "closing the snack bar"
+                ]
+            },
+            "Otter": {
+                emoji: "🦦",
+                actions: [
+                    "running a riverside café", "arranging pebble trays", "preparing berry drinks", "decorating river counters", "painting river signs",
+                    "browsing a riverside market", "preparing fruit pops", "labeling snack jars", "sketching river scenes", "preparing chilled drinks",
+                    "arranging river décor", "preparing snack platters", "labeling river treats", "arranging table decor", "smiling at guests",
+                    "preparing berry drinks", "browsing a riverside market", "preparing fruit pops", "cleaning café counters", "closing the café"
+                ]
+            },
+            "Parrot": {
+                emoji: "🦜",
+                actions: [
+                    "running a tropical juice bar", "arranging fruit displays", "preparing colorful smoothies", "decorating bright counters", "painting tropical signs",
+                    "browsing a beach market", "preparing fruit skewers", "labeling juice cups", "sketching menu art", "preparing chilled drinks",
+                    "arranging tropical décor", "setting tasting cups", "smiling at guests", "preparing colorful smoothies", "closing the juice bar",
+                    "arranging fruit displays", "browsing a beach market", "preparing fruit skewers", "cleaning bar counters", "organizing pantry shelves"
+                ]
+            },
+            "Koala": {
+                emoji: "🐨",
+                actions: [
+                    "running a eucalyptus tea café", "arranging leaf baskets", "preparing herbal drinks", "decorating wooden shelves", "painting forest signs",
+                    "browsing a forest market", "folding soft napkins", "arranging drink cups", "organizing picnic trays", "sorting tea jars",
+                    "preparing herbal drinks", "decorating wooden shelves", "painting forest signs", "browsing a forest market", "folding soft napkins"
+                ]
+            },
+            "Goat": {
+                emoji: "🐐",
+                actions: [
+                    "running a mountain cheese stall", "arranging cheese boards", "preparing milk snacks", "decorating rustic counters", "painting hill signs",
+                    "browsing a mountain market", "preparing cheese bites", "labeling cheese jars", "smiling at guests", "closing the stall",
+                    "arranging cheese boards", "preparing milk snacks", "decorating rustic counters", "painting hill signs", "browsing a mountain market"
+                ]
+            },
+            "Fantasy": {
+                emoji: "🦄",
+                actions: [
+                    "running a pastel magic café", "preparing sparkling fruit drinks", "arranging sky picnic baskets", "hosting a meadow tea party", "decorating a dream café",
+                    "gathering stardust ingredients", "baking rainbow cookies", "organizing cloud pillows", "sketching magic spells", "serving moonbeam tea",
+                    "flying over pastel clouds", "polishing magic wands", "arranging crystal jars", "painting dreamscapes", "visiting a star market"
+                ]
+            }
+        };
+
+        function spinActivity() {
+            const btn = document.querySelector('.spin-btn');
+            btn.innerHTML = "⏳ กำลังสุ่ม...";
+            btn.disabled = true;
+
+            const selector = document.getElementById('themeSelect');
+            const selectedTheme = selector.value;
+            let finalTheme = "";
+            
+            // Random Logic
+            if (selectedTheme === 'random') {
+                const keys = Object.keys(data);
+                finalTheme = keys[Math.floor(Math.random() * keys.length)];
+            } else {
+                finalTheme = selectedTheme;
+            }
+
+            const themeData = data[finalTheme];
+            const activities = themeData.actions;
+            const finalActivity = activities[Math.floor(Math.random() * activities.length)];
+
+            // Animation Simulation
+            setTimeout(() => {
+                document.getElementById('emojiIcon').innerText = themeData.emoji;
+                document.getElementById('themeDisplay').innerHTML = `ชุด: ${finalTheme} Theme`;
+                document.getElementById('activityDisplay').innerHTML = `กำลัง... ${finalActivity}`;
+                
+                // Update Copy Text
+                const copyText = `🐱 Mother & Baby Cat Activity 🍼\n` +
+                                 `👗 Costume: ${themeData.emoji} ${finalTheme} Theme\n` +
+                                 `🧺 Activity: ${finalActivity}\n` +
+                                 `#MeowAndBaby #CuteActivity`;
+                
+                document.getElementById('copyArea').value = copyText;
+                document.getElementById('btnCopy').style.display = 'flex'; // Show copy button
+
+                btn.innerHTML = "✨ สุ่มกิจกรรม (Spin)";
+                btn.disabled = false;
+            }, 600);
+        }
+
+        function copyText() {
+            const copyArea = document.getElementById("copyArea");
+            copyArea.select();
+            copyArea.setSelectionRange(0, 99999); 
+            
+            navigator.clipboard.writeText(copyArea.value).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+    </script>
+</body>
+</html>
